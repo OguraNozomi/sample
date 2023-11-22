@@ -22,10 +22,10 @@ img {
 }        
 
 .navbar {                   
-  display: flex; 　　　　 /*横並びの指定*/
-  font-size: 1.25rem;   
+  display: flex;        /*横並びの指定*/
+  font-size: 1.25rem;   /*rem:基準値が親とか関係なく、HTML要素のfont-sizeを基準  1.25em＝親要素の文字サイズの1.25文字分 */
   margin-top: 55px;    
-  list-style: none;  
+  list-style: none;    /*箇条書きマークを消す*/
 }
 
 .navbar li {
@@ -36,51 +36,74 @@ img {
   color: #5f5f5f;       
 }
 
-.navbar a:hover {
+.navbar a:hover {  /* aタグホバー時の指定 箇条書きマークを消す 普通はユーザーがカーソル（マウスポインター）を要素の上にかざしたとき*/
   color: #1ec247;       
 }             
 
 .header-wrapper {                  
   display: flex; 
-  justify-content: space-between;
+  justify-content: space-between; /* 各アイテムを均等に配置し
+                                   最初のアイテムは先頭に寄せ、
+                                   最後のアイテムは末尾に寄せる */
 }
 
 .page-title {    
   font-size: 7rem;
-  text-align: center;
+  text-align: center;   /*水平方向の配置*/
 }           
 
 .container { 
-  max-width: 1100px; 
-  margin: 0 auto;
+  max-width: 1100px;   /*最大幅*/
+  margin: 0 auto;    /*ボックスを画面中央に配置*/
 }
 
+
+/*背景画像*/  
 .bg-img {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-size: cover;    /*全体で１つの画像？*/
+  background-position: center;  
+  background-repeat: no-repeat;  /*1つの画像*/
 }
 
 /*メニュー*/
-#menu {
+#menu {   
   background-image: url(../images/bg-menu.jpg);
-  min-height: 100vh;
+  min-height: 100vh;    /*要素の最小高 height プロパティの使用値が、min-height で指定した値を下回ることを防ぐ*/
+                        /*vh ビューポートの高さに対する割合100vhは100/100　vwは幅 */
 } 
 
 .menu-wrapper {
-  margin-top: 10%;
+  margin-top: 10%;  /*直近のブロックコンテナーの幅からの相対 */
 }             
 
 .grid {           
-  display: grid;
-  gap: 25px;  /*余白をつける*/
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
-   /*grid-template-columns: 1fr 1fr 1fr;*/
+  display: grid;      /*子の <div>をグリッド上の行と列の中に配置する*/
+  gap: 25px;        /*行や列の間のすき間*/
+  /*grid-template-columns: 1fr 1fr 1fr;   CSSグリッドで使える単位「fr」「fraction(比率)」親要素から見た子要素の大きさの割合*/
+   /*grid-template-columns: repeat(3, 1fr); 上と同じこと repeat(繰り返す回数,トラックの幅)*/
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /*minmax(min,max)のmin値がmax値より大きい場合、max値は無視され、
+                                                                min値のみが使用。min値に1frを使用すると無効*/
+                                                                /*auto-fit,1カラムの値が画面サイズによって変更*/
+   
    margin-top: 6%; 
   margin-bottom: 50px; 
 }   
 
-@media(max-width: 600px){ 
+
+
+
+/* ここからすべて追加 */
+
+/* 画面幅が600pxより大きいとき、スマホ用ナビを消す これが標準*/
+.sp-navbar {
+  display: none;
+}
+/* 画面幅が600pxより大きいとき、ハンバーガーメニューを消す  これが標準*/
+#hamburger-menu {
+  display: none;
+}
+
+@media(max-width: 600px){    /*@mediaスタイルシートを適用する条件を指定 条件複数可@media (min-width:768px) and (max-width:1200px) */
   .menu-wrapper{
     margin-top: 40%;
   }
@@ -88,19 +111,9 @@ img {
   .page-title {
     font-size: 5rem;
   }
-}         
+}   
 
-/* ここからすべて追加 */
-
-/* 画面幅が600pxより大きいとき、スマホ用ナビを消す */
-.sp-navbar {
-  display: none;
-}
-/* 画面幅が600pxより大きいとき、ハンバーガーメニューを消す */
-#hamburger-menu {
-  display: none;
-}
-
+/*-----------------------------------------------------*/
 @media(max-width: 600px) {
   /* 通常のナビバーを消す */
   .navbar {
@@ -109,8 +122,11 @@ img {
 
   /* ハンバーガーメニューの大きさや配置の指定 */
   #hamburger-menu {
-    position: relative;
-    display: block;
+    position: relative;  /*top, right, bottom, left の値に基づいて自分自身からの相対オフセットで配置? z-indexで重なり順を指定できる*/
+    display: block;    /*block⇒要素が横までいっぱいに広がり、縦に並んでいく　　改行するように
+                          inline⇒要素が平ぺったく横に並んでいく
+                          inline-block⇒blockとinlineの中間
+                          none⇒非表示になる */
     width: 30px;
     height: 25px;
     margin: 50px;
@@ -119,7 +135,7 @@ img {
 
   /* ハンバーガーメニューの真ん中の線を表示 */
   #hamburger-menu span {
-    position: absolute;
+    position: absolute;   /*親要素のうちrelativeを指定している要素の左上を起点*/
     top: 50%;
     left: 0;
     display: block;
@@ -167,7 +183,7 @@ img {
     background-color: rgba(0,0,0,.8);
     transition: all.2s ease-in-out;
     opacity:0;
-    transform: translate(-100%);
+   transform: translate(-100%);
   }
 
 /* スマホ用ナビバーの表示位置指定 */
@@ -239,3 +255,4 @@ img {
     opacity:1;
   }
 }
+/*-----------------------------------------------------*/
